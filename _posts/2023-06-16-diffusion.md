@@ -11,7 +11,7 @@ $$`\log p  = C`$$ -->
 ### A stochastic process
 A stochastic process given by
 ```math
-d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t
+$d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t$
 ```
 then its probability density $`p(x,t)`$ satisfies the Fokker-Planck equation
 ```math
