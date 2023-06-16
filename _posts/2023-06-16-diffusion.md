@@ -25,7 +25,7 @@ Hence if we take $\sigma(X_t,t) = \delta$ a constant and $\mu(X_t,t) = \nabla \l
 ```
 When $t\to\infty$,
 ```math
-p_\inft\nabla \log q = \frac12 \delta^2 \partial_x p_\infty
+p_\infty\nabla \log q = \frac12 \delta^2 \partial_x p_\infty
 ```
 which is
 ```math
