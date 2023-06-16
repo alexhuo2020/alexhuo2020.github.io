@@ -96,5 +96,31 @@ now let's demonstrate this with an example.
 
 We train a neural network to map from 0 to the 2 by making it Gaussian.
 
+```
+x = torch.randn((2000,1)) + 2.
+
+class MM(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = nn.Linear(1,20)
+        self.l2 = nn.Linear(20,1)
+    def forward(self,x):
+        return self.l2(torch.relu(self.l1(x)))
+model = MM()
+optim = torch.optim.Adam(model.parameters())
+for epoch in range(1000):
+    eps = torch.zeros((2000,1))
+    loss = torch.sum((model(eps) + torch.randn((2000,1))  -x)**2)
+    optim.zero_grad()
+    loss.backward()
+    optim.step()
+eps = torch.zeros((1000,1))
+y = model(eps)
+sns.distplot(y.detach().numpy())
+```
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/93ee998a-e44b-4dad-bd3b-3d88f2090d0e)
+
+
+
 
 
