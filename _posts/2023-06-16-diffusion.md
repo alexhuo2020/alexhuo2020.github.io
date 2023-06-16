@@ -2,21 +2,26 @@
 ### see the theoretical introduction in https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
 
 <!-- The diffusion model is based on the Langevin dynamics
-```math
-x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)
-```math
+
+$$x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)$$
+
 So that the equilibrium distribution of $x_t$ as $t\to\infty$ is
+
 $$`\log p  = C`$$ -->
 
 ### A stochastic process
 A stochastic process given by
+
 ```math
 d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t
 ```
+
 then its probability density $`p(x,t)`$ satisfies the Fokker-Planck equation
+
 ```math
 \partial_t p (x,t) = - \partial_x (\mu(x,t)p(x,t)) + \partial_x^2 (D(x,t)p(x,t)),\quad D(x,t)=\frac12 \sigma^2(x,t)
 ```
+
 (see wiki:https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation)
 
 Hence if we take $\sigma(X_t,t) = \delta$ a constant and $\mu(X_t,t) = \nabla \log q(X_t)$, then the Fokker-Planck equation becomes
