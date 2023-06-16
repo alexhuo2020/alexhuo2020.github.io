@@ -46,6 +46,8 @@ We arrive at the following formula
 
 $$x_t = \sqrt{1-\beta_t} x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
 
+Now, let's implement the Euler-Maruyama Method.
+
 ```
 import numpy as np
 import torch
@@ -59,5 +61,23 @@ import seaborn as sns
 sns.distplot(x)
 sns.distplot(eps)
 ```
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f63e50cf-7f50-48b4-93cc-68fd9372bc52)
+
+Use the second approach:
+```
+import numpy as np
+import torch
+import torch.nn as nn
+x_0  = torch.rand(1000)
+betas = torch.linspace(0.0001,0.02,1000)
+x = x_0
+for i in range(len(betas)):
+    eps = torch.randn_like(x)
+    x = np.sqrt(1-betas[i]) * x + np.sqrt(betas[i])*eps
+sns.distplot(x)
+sns.distplot(eps)
+```
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/689f390a-b77a-42f4-ac00-0ead73ca3976)
+
 
 
