@@ -2,7 +2,9 @@
 ### see the theoretical introduction in https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
 
 <!-- The diffusion model is based on the Langevin dynamics
-$$`x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)`$$
+```math
+`x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)`
+```math
 So that the equilibrium distribution of $x_t$ as $t\to\infty$ is
 $$`\log p  = C`$$ -->
 
