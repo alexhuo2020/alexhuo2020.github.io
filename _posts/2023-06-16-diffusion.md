@@ -61,7 +61,7 @@ import seaborn as sns
 sns.distplot(x)
 sns.distplot(eps)
 ```
-<img src="[http://....jpg](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f63e50cf-7f50-48b4-93cc-68fd9372bc52)" width="200", heigh="200" />
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f63e50cf-7f50-48b4-93cc-68fd9372bc52)
 
 Use the second approach:
 ```
