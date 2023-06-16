@@ -79,5 +79,22 @@ sns.distplot(eps)
 ```
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/689f390a-b77a-42f4-ac00-0ead73ca3976)
 
+### Distance between distributions, KL divergence
+If we want to compare the generated data with real data, one can use the mean square error (MSE) if we want to fit a determinstic function.
+
+However if we want to compare two distributions (MSE) will not work.
+
+A tool we can use if the KL divergence, defined to be
+$$KL(p||q) = \mathbb{E}_{p}[\log \frac{p}{q}]$$
+For two Normal distributions $p = N(\mu_1,\Sigma_1)$, $q = N(\mu_2,\Sigma_2)$, the value is ($d$ is the dimension)
+$$KL(p||q) = \frac12 tr (\Sigma_2^{-1}\Sigma_1)- d + (\mu_2 - \mu_1)^T \Sigma_2^{-1} (\mu_2-\mu_1) + \log \frac{\det \Sigma_2}{\det \Sigma_2}$$
+If $\Sigma_1 = \Sigma_2 = I$, then
+$$KL(p||q) = (\mu_2 - \mu_1)^T (\mu_2-\mu_1)$$
+is just the $L^2$ loss.
+
+now let's demonstrate this with an example.
+
+We train a neural network to map from 0 to the 2 by making it Gaussian.
+
 
 
