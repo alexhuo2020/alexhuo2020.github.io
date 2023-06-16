@@ -120,6 +120,49 @@ sns.distplot(y.detach().numpy())
 ```
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/93ee998a-e44b-4dad-bd3b-3d88f2090d0e)
 
+Thus we can add noise to make predictions.
+
+### Brief introduction to variational inference
+Suppose the distribution of $x_0$ depends on some hidden parameter $x_1$.
+We want to infer the distribution of $x_0$ given its observations.
+
+Beyes rule
+$$p(x_1|x_0) = \frac{p(x_0|x_1)p(x_1)}{p(x_0)}$$
+
+#### MLE (Maximum Likelihood Estimation):
+Assume $x_1$ is a constant parameter.
+Assume we have a model $x_0|x_1 \sim P_{x_1}$
+$$\max_{x_1} \log \Pi_{i=1}^n p(x_0^i| x_1) $$
+The log-likelihood
+$$ \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) = \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) - \log p(x_0^i|x_1^*)  $$
+since the second term is a constant, where $x_1^*$ is the ideal value. The above formula equals
+$$\frac{1}{n}\sum_{i=1}^n \log \frac{p(x_0^i|x_1)}{p(x_0^i|x^*)} \to \mathbb{E}_{x_0|x_1^*} [\log \frac{p(x_0|x_1)}{p(x_0|x_1^*)}] = - KL(p(x_0|x_1)||p(x_0|x_1^*))$$
+That is, maximizing the likelihood is equal to minimizing the KL divergence between the posterior distributions.
+
+
+### Bayesian posterior sampling
+Instead get a point estimate of $x_1$, one can assign a prior distribution $p(x_1)$ and use the Bayesian formula to get the posterior distribution $p(x_1|x_0)$. Then one can do the prediction using
+$$p(x_p|x_0) = \int p(x_p|x_1) p(x_1|x_0) dx_1$$
+However, the posterior sampling is not easy since $p(x_0)$ is unknown.
+
+
+### Variational Bayes
+We can approximate the posterior distribution by using a distribution $q_\phi(x_1|x_0)$. In order to get a nice approximation, we want the distance between this approximated posterior distribution is close to the real one.
+
+$$\min_{\phi} KL(q_\phi(x_1|x_0)||p(x_1|x_0))$$
+
+$$\begin{aligned}- \int_{z}{q_\phi(\cdot|x)} \log \frac{q_\phi(z|x_0)}{p(z|x_0)} dz
+ &= \int_z{q_\phi(\cdot|x_0)} \log \frac{p(z|x_0)}{q_\phi(z|x)} dz = \int_{q_\phi(\cdot|x)} \log  \frac{p(z,x_0)}{q_\phi(z|x)p(x_0)} dz\\&=  \int_{q_\phi(\cdot|x_0)} \log  \frac{p(z,x_0)}{q_\phi(z|x)} dz - \int_{q_\phi(\cdot|x_0)} \log  {p(x_0)}dz=\int_{q_\phi(\cdot|x_0)} \log  \frac{p(z,x_0)}{q_\phi(z|x)} dz - \log p(x_0)\end{aligned}$$
+The first term has a name ELBO (Evidence Lower BOund), $\mathcal L$.
+<!-- Use the Jensen's inequality, the first term is bounded by
+$$\int_z {q_\phi(\cdot|x_0)} \log  \frac{p_\theta(z|x_0)p_\theta(x_0)}{q_\phi(z|x_0)} dz \le \int_z {q_\phi(\cdot|x_0)} \log  \frac{p_\
+(z|x_0)}{q_\phi(z|x_0)} dz + \log \int_z p_\theta(z,x_0) dx = -KL(q_\phi(x_1|x_0)||p_\theta(x_1|x_0)+ \log p_\theta(x_0) $$ -->
+
+Example:
+$x_1 \sim N(0,1)$, $x_0\sim N(x_1,1)$, then the posterior distribution 
+$p(x_1|x_0) \propto p(x_0|x_1) p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}\propto e^{-(x_1-\frac12 x_0)^2}$, hence $x_1|x_0 \sim N(\frac12 x_0|\frac{1}{\sqrt{2}})$
+
+Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2} $ is a joint distribution
 
 
 
