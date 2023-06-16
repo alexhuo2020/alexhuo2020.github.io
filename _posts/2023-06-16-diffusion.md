@@ -47,4 +47,3 @@ We arrive at the following formula
 $$x_t = \sqrt{1-\beta_t} x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
 
 
-![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/455d6357-85c6-4247-8b9c-2fbec97b5601)
