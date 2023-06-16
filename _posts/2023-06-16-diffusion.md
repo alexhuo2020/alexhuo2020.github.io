@@ -3,14 +3,16 @@
 
 <!-- The diffusion model is based on the Langevin dynamics
 ```math
-`x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)`
+x_t = x_{t-1} + \frac{\delta}{2} \nabla_x \log p(x_{t-1}) + \sqrt{\delta} \epsilon_t, \quad \epsilon_t \sim N(0,1)
 ```math
 So that the equilibrium distribution of $x_t$ as $t\to\infty$ is
 $$`\log p  = C`$$ -->
 
 ### A stochastic process
 A stochastic process given by
-$$`d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t`$$
+```math
+d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t
+```
 then its probability density $`p(x,t)`$ satisfies the Fokker-Planck equation
 $$`\partial_t p (x,t) = - \partial_x (\mu(x,t)p(x,t)) + \partial_x^2 (D(x,t)p(x,t)),\quad D(x,t)=\frac12 \sigma^2(x,t) `$$
 (see wiki:https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation)
