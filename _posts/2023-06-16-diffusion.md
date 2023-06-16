@@ -140,13 +140,13 @@ $$\frac{1}{n}\sum_{i=1}^n \log \frac{p(x_0^i|x_1)}{p(x_0^i|x^*)} \to \mathbb{E}_
 That is, maximizing the likelihood is equal to minimizing the KL divergence between the posterior distributions.
 
 
-### Bayesian posterior sampling
+#### Bayesian posterior sampling
 Instead get a point estimate of $x_1$, one can assign a prior distribution $p(x_1)$ and use the Bayesian formula to get the posterior distribution $p(x_1|x_0)$. Then one can do the prediction using
 $$p(x_p|x_0) = \int p(x_p|x_1) p(x_1|x_0) dx_1$$
 However, the posterior sampling is not easy since $p(x_0)$ is unknown.
 
 
-### Variational Bayes
+#### Variational Bayes
 We can approximate the posterior distribution by using a distribution $q_\phi(x_1|x_0)$. In order to get a nice approximation, we want the distance between this approximated posterior distribution is close to the real one.
 
 $$\min_{\phi} KL(q_\phi(x_1|x_0)||p(x_1|x_0))$$
@@ -162,7 +162,26 @@ Example:
 $x_1 \sim N(0,1)$, $x_0\sim N(x_1,1)$, then the posterior distribution 
 $p(x_1|x_0) \propto p(x_0|x_1) p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}\propto e^{-(x_1-\frac12 x_0)^2}$, hence $x_1|x_0 \sim N(\frac12 x_0|\frac{1}{\sqrt{2}})$
 
-Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2} $ is a joint distribution
+Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2} $ is a joint distribution.
+
+```
+z = torch.randn((1000,1))
+x0 = torch.randn(1) + z**2
+def normalpdf(x,mu):
+  return 1/np.sqrt(2*np.pi)*torch.exp(-0.5*(x-mu)**2)
+model = MM()
+optim = torch.optim.Adam(model.parameters())
+for epoch in range(1000):
+    z = torch.randn(1) + model(x0)
+    loss = -torch.mean(torch.log(normalpdf(z,0)*normalpdf(x0,z)/(normalpdf(z,model(x0)))))
+    optim.zero_grad()
+    loss.backward()
+    optim.step()
+import matplotlib.pyplot as plt
+plt.plot(x0,model(x0).detach().cpu())
+```
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/cb3350f7-d152-4f81-8559-c1c4d5a642a7)
+
 
 
 
