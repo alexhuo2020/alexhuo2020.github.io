@@ -46,4 +46,18 @@ We arrive at the following formula
 
 $$x_t = \sqrt{1-\beta_t} x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
 
+```
+import numpy as np
+import torch
+x_0  = torch.rand(1000)
+betas = torch.linspace(0.0001,0.02,1000)
+x = x_0
+for i in range(len(betas)):
+    eps = torch.randn_like(x)
+    x = x - 0.5*betas[i]*x + np.sqrt(betas[i])*eps
+import seaborn as sns
+sns.distplot(x)
+sns.distplot(eps)
+```
+
 
