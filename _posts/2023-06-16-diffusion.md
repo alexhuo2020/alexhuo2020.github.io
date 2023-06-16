@@ -1,4 +1,4 @@
-# Diffusion model
+# Diffusion model 1: Some theoretical background
 ### see the theoretical introduction in https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
 
 <!-- The diffusion model is based on the Langevin dynamics
