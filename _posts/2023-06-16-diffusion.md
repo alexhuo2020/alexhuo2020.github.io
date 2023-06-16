@@ -61,7 +61,7 @@ import seaborn as sns
 sns.distplot(x)
 sns.distplot(eps)
 ```
-![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f63e50cf-7f50-48b4-93cc-68fd9372bc52 = 25*)
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f63e50cf-7f50-48b4-93cc-68fd9372bc52 = 25x)
 
 Use the second approach:
 ```
