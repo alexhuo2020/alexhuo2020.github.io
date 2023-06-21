@@ -192,7 +192,7 @@ Example:
 $x_1 \sim N(0,1)$, $x_0\sim N(x_1,1)$, then the posterior distribution 
 $p(x_1|x_0) \propto p(x_0|x_1) p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}\propto e^{-(x_1-\frac12 x_0)^2}$, hence $x_1|x_0 \sim N(\frac12 x_0|\frac{1}{\sqrt{2}})$
 
-Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}$ is a joint distribution.
+Here $p(x_0,x_1)=p(x_0|x_1)p(x_1)\propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}$ is a joint distribution.
 
 ```
 z = torch.randn((1000,1))
