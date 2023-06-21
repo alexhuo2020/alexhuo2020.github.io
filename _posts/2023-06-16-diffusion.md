@@ -159,6 +159,7 @@ $$\max_{x_1} \log \Pi_{i=1}^n p(x_0^i| x_1)$$
 The log-likelihood
 
 $$\max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) = \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) - \log p(x_0^i|x_1^*)$$
+
 since the second term is a constant, where $x_1^*$ is the ideal value. The above formula equals
 
 $$\frac{1}{n}\sum_{i=1}^n \log \frac{p(x_0^i|x_1)}{p(x_0^i|x^*)} \to \mathbb{E}_{x_0|x_1^*} [\log \frac{p(x_0|x_1)}{p(x_0|x_1^*)}] = - KL(p(x_0|x_1)||p(x_0|x_1^*))$$
@@ -181,6 +182,7 @@ $$\min_{\phi} KL(q_\phi(x_1|x_0)||p(x_1|x_0))$$
 
 $$\begin{aligned}- \int_{z}{q_\phi(\cdot|x)} \log \frac{q_\phi(z|x_0)}{p(z|x_0)} dz
  &= \int_z{q_\phi(\cdot|x_0)} \log \frac{p(z|x_0)}{q_\phi(z|x)} dz = \int_{q_\phi(\cdot|x)} \log  \frac{p(z,x_0)}{q_\phi(z|x)p(x_0)} dz\\&=  \int_{q_\phi(\cdot|x_0)} \log  \frac{p(z,x_0)}{q_\phi(z|x)} dz - \int_{q_\phi(\cdot|x_0)} \log  {p(x_0)}dz=\int_{q_\phi(\cdot|x_0)} \log  \frac{p(z,x_0)}{q_\phi(z|x)} dz - \log p(x_0)\end{aligned}$$
+ 
 The first term has a name ELBO (Evidence Lower BOund), $\mathcal L$.
 <!-- Use the Jensen's inequality, the first term is bounded by
 $$\int_z {q_\phi(\cdot|x_0)} \log  \frac{p_\theta(z|x_0)p_\theta(x_0)}{q_\phi(z|x_0)} dz \le \int_z {q_\phi(\cdot|x_0)} \log  \frac{p_\
@@ -190,7 +192,7 @@ Example:
 $x_1 \sim N(0,1)$, $x_0\sim N(x_1,1)$, then the posterior distribution 
 $p(x_1|x_0) \propto p(x_0|x_1) p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}\propto e^{-(x_1-\frac12 x_0)^2}$, hence $x_1|x_0 \sim N(\frac12 x_0|\frac{1}{\sqrt{2}})$
 
-Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2} $ is a joint distribution.
+Here $p(x_0,x_1) = p(x_0|x_1)p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}$ is a joint distribution.
 
 ```
 z = torch.randn((1000,1))
@@ -208,6 +210,7 @@ for epoch in range(1000):
 import matplotlib.pyplot as plt
 plt.plot(x0,model(x0).detach().cpu())
 ```
+
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/cb3350f7-d152-4f81-8559-c1c4d5a642a7)
 
 after we get the posterior distribution $q_\phi(\cdot|x)$, we can use it to generate the distribution of $x_0$
@@ -218,6 +221,7 @@ x0_pred = torch.randn(1) + z
 sns.distplot(x0_pred.detach().numpy())
 sns.distplot(x0)
 ```
+
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/cf950642-5000-4fda-933e-5e283c3fbb51)
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/dcf833ed-c743-4b9e-9a5b-a79f879a75dc)
@@ -226,6 +230,7 @@ here we have assumed that we have the model $x_0|x_1 \sim N(x_0|x_1)$. In genera
 
 Example:
 $x_1 \sim N(0,1)$, $x_0 \sim N(x_1^2,1)$, let's infer the $x_1^2$ function.
+
 ```
 x1 = torch.randn((1000,1))
 x0 = torch.randn((1000,1)) + x1**2
@@ -248,11 +253,14 @@ x0_pred = torch.randn((1000,1)) + model_theta(z)
 sns.distplot(x0_pred.detach().cpu())
 sns.distplot(x0)
 ```
+
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/14f995ed-1780-4b8a-a6de-937d0ba42963)
 Note here to sample prediction, we use the model $x_1\sim N(0,1),$ $x_0 \sim N(f_\theta(x_1),1)$
 
 remark: one can also use the obtained posterior distribution $q_\phi(x_1|x_0)$ to make predictions using Bayesian as 
+
 $$p(x_0^{pred}|x_0) = \int_z p_\theta(x_0^{pred}|z) q_\phi(z|x_0) dz$$
+
 For example, one may use the pymc package to do this.
 
 
