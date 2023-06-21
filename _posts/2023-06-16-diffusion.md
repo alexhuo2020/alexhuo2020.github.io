@@ -100,11 +100,17 @@ If we want to compare the generated data with real data, one can use the mean sq
 However if we want to compare two distributions (MSE) will not work.
 
 A tool we can use if the KL divergence, defined to be
+
 $$KL(p||q) = \mathbb{E}_{p}[\log \frac{p}{q}]$$
+
 For two Normal distributions $p = N(\mu_1,\Sigma_1)$, $q = N(\mu_2,\Sigma_2)$, the value is ($d$ is the dimension)
+
 $$KL(p||q) = \frac12 tr (\Sigma_2^{-1}\Sigma_1)- d + (\mu_2 - \mu_1)^T \Sigma_2^{-1} (\mu_2-\mu_1) + \log \frac{\det \Sigma_2}{\det \Sigma_2}$$
+
 If $\Sigma_1 = \Sigma_2 = I$, then
+
 $$KL(p||q) = (\mu_2 - \mu_1)^T (\mu_2-\mu_1)$$
+
 is just the $L^2$ loss.
 
 now let's demonstrate this with an example.
@@ -147,17 +153,24 @@ $$p(x_1|x_0) = \frac{p(x_0|x_1)p(x_1)}{p(x_0)}$$
 #### MLE (Maximum Likelihood Estimation):
 Assume $x_1$ is a constant parameter.
 Assume we have a model $x_0|x_1 \sim P_{x_1}$
-$$\max_{x_1} \log \Pi_{i=1}^n p(x_0^i| x_1) $$
+
+$$\max_{x_1} \log \Pi_{i=1}^n p(x_0^i| x_1)$$
+
 The log-likelihood
-$$ \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) = \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) - \log p(x_0^i|x_1^*)  $$
+
+$$\max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) = \max_{x_1} \sum_{i=1}^n \log p(x_0^i|x_1) - \log p(x_0^i|x_1^*)$$
 since the second term is a constant, where $x_1^*$ is the ideal value. The above formula equals
+
 $$\frac{1}{n}\sum_{i=1}^n \log \frac{p(x_0^i|x_1)}{p(x_0^i|x^*)} \to \mathbb{E}_{x_0|x_1^*} [\log \frac{p(x_0|x_1)}{p(x_0|x_1^*)}] = - KL(p(x_0|x_1)||p(x_0|x_1^*))$$
+
 That is, maximizing the likelihood is equal to minimizing the KL divergence between the posterior distributions.
 
 
 #### Bayesian posterior sampling
 Instead get a point estimate of $x_1$, one can assign a prior distribution $p(x_1)$ and use the Bayesian formula to get the posterior distribution $p(x_1|x_0)$. Then one can do the prediction using
+
 $$p(x_p|x_0) = \int p(x_p|x_1) p(x_1|x_0) dx_1$$
+
 However, the posterior sampling is not easy since $p(x_0)$ is unknown.
 
 
