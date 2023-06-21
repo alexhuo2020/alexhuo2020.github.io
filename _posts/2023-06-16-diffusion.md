@@ -14,30 +14,28 @@ A stochastic process given by
 
 $$d X_t = \mu(X_t,t) dt + \sigma(X_t,t) dW_t$$
 
-then its probability density $`p(x,t)`$ satisfies the Fokker-Planck equation
+then its probability density $p(x,t)$ satisfies the Fokker-Planck equation
 
-```math
-\partial_t p (x,t) = - \partial_x (\mu(x,t)p(x,t)) + \partial_x^2 (D(x,t)p(x,t)),\quad D(x,t)=\frac12 \sigma^2(x,t)
-```
+
+$$\partial_t p (x,t) = - \partial_x (\mu(x,t)p(x,t)) + \partial_x^2 (D(x,t)p(x,t)),\quad D(x,t)=\frac12 \sigma^2(x,t)$$
 
 (see wiki:https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation)
 
 Hence if we take $\sigma(X_t,t) = \delta$ a constant and $\mu(X_t,t) = \nabla \log q(X_t)$, then the Fokker-Planck equation becomes
-```math
-\partial_t p = -\partial_x (p \nabla \log q) + \partial_x^2 (\frac12p \delta^2 )
-```
+
+$$\partial_t p = -\partial_x (p \nabla \log q) + \partial_x^2 (\frac12p \delta^2 )$$
+
 When $t\to\infty$,
-```math
-p_\infty\nabla \log q = \frac12 \delta^2 \partial_x p_\infty
-```
+
+$$p_\infty\nabla \log q = \frac12 \delta^2 \partial_x p_\infty$$
+
 which is
-```math
-\nabla \log q = \frac12 \delta^2 \nabla \log p_\infty
-```
+
+$$\nabla \log q = \frac12 \delta^2 \nabla \log p_\infty$$
+
 i.e.
-```math
-\frac12 \delta^2 \log p_\infty =\log  q
-```
+
+$$\frac12 \delta^2 \log p_\infty =\log  q$$
 
 Taking $\delta=1$,
 we conclude:
