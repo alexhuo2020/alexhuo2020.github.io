@@ -226,7 +226,7 @@ sns.distplot(x0)
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/dcf833ed-c743-4b9e-9a5b-a79f879a75dc)
 
-here we have assumed that we have the model $x_0|x_1 \sim N(x_0|x_1)$. In general (as we assume the distribution $p$ is exact. In general, we need to infer the model with parameters $p_\theta$. The way to do is similar, but we need to replace $p$ by $p_\theta$ in the above formula.
+here we have assumed that we have the model $x_0|x_1 \sim N(x_0|x_1)$, as we assume the distribution $p$ is exact. In general, we need to infer the model with parameters $p_\theta$. The way to do is similar, but we need to replace $p$ by $p_\theta$ in the above formula.
 
 Example:
 $x_1 \sim N(0,1)$, $x_0 \sim N(x_1^2,1)$, let's infer the $x_1^2$ function.
