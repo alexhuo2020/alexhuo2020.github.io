@@ -266,9 +266,9 @@ sns.distplot(x0)
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/14f995ed-1780-4b8a-a6de-937d0ba42963)
 Note here to sample prediction, we use the model $x_1\sim N(0,1),$ $x_0 \sim N(f_\theta(x_1),1)$
 
-remark: one can also use the obtained posterior distribution $q_\phi(x_1|x_0)$ to make predictions using Bayesian as 
+remark: one can also use the obtained posterior distribution $q_\phi(x_1\mid x_0)$ to make predictions using Bayesian as 
 
-$$p(x_0^{pred}|x_0) = \int_z p_\theta(x_0^{pred}|z) q_\phi(z|x_0) dz$$
+$$p(x_0^{pred}\mid x_0) = \int_z p_\theta(x_0^{pred}\mid z) q_\phi(z\mid x_0) dz$$
 
 For example, one may use the pymc package to do this.
 
