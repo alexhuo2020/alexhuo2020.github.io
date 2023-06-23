@@ -4,7 +4,8 @@
 We have seen that to make predictions of an unkown distribution, we can use a neural network $f_\theta$ to construct the model and then use the variational inference to infer the parameter. One can combine this idea with the stochastic process to get the diffusion model.
 
 #### The model:
-$$x_0\sim p(x_0), x_1|x_0 \sim N(\sqrt{1-\beta_1}x_0,\beta_1 I),\ldots, x_t|x_{t-1} \sim N(\sqrt{1-\beta_t}x_{t-1}|\beta_t I)$$
+
+$$x_0\sim p(x_0), x_1\mid x_0 \sim N(\sqrt{1-\beta_1}x_0,\beta_1 I),\ldots, x_t\mid x_{t-1} \sim N(\sqrt{1-\beta_t}x_{t-1}|\beta_t I)$$
 
 #### Reparametrization trick:
 introduce $\alpha_t = 1-\beta_t$, $\bar\alpha_t =\Pi_{i=1}^t \alpha_t$,
