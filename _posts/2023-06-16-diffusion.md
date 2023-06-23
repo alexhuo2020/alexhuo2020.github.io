@@ -43,6 +43,7 @@ we conclude:
 1. For SDE $dX_t = \nabla_x \log q(X_t) dt +  dW_t$, $\log p_\infty = 2 \log q$.
 2. if we take $\log q(x)=-\frac14 x^2$, then the equilibrium distribution is $p_\infty \propto e^{-\frac12 x^2}$ and is standard Gaussian.
 the SDE becomes
+
 $$dX_t = -\frac12 X_t dt + dW_t$$
 
 ### Euler-Maruyama Method
@@ -54,7 +55,9 @@ By the theorem of Brownian motion, $\Delta W_n \sim N(0,\Delta t_n)$.
 
 $x_n - x_{n-1} = -\frac12 \Delta t_n x_{t-1} + \sqrt{\Delta t_n} \epsilon_{n-1}$
 Rewriting using $n\to t, \Delta t_n\to \beta_t$,
+
 $$x_{t}  - x_{t-1} = - \frac12 \beta_t x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}, \epsilon_{t-1} \sim N(0,1)$$
+
 We can replace $1-\frac12\beta_t$ by $\sqrt{1-\beta_t}$ since when $\beta_t$ is small, $\sqrt{1-\beta_t} \sim 1-\frac12\beta_t$ (Taylor Series).
 
 We arrive at the following formula
@@ -148,6 +151,7 @@ Suppose the distribution of $x_0$ depends on some hidden parameter $x_1$.
 We want to infer the distribution of $x_0$ given its observations.
 
 Beyes rule
+
 $$p(x_1|x_0) = \frac{p(x_0|x_1)p(x_1)}{p(x_0)}$$
 
 #### MLE (Maximum Likelihood Estimation):
@@ -192,7 +196,12 @@ Example:
 $x_1 \sim N(0,1)$, $x_0\sim N(x_1,1)$, then the posterior distribution 
 $p(x_1|x_0) \propto p(x_0|x_1) p(x_1) \propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}\propto e^{-(x_1-\frac12 x_0)^2}$, hence $x_1|x_0 \sim N(\frac12 x_0|\frac{1}{\sqrt{2}})$.
 
-Here $p(x_0,x_1)=p(x_0|x_1)p(x_1)\propto e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}$ is a joint distribution.
+
+Here
+
+$$p(x_0,x_1)=p(x_0|x_1)p(x_1)\propto~e^{-\frac12 (x_0-x_1)^2} e^{-\frac12 x_1^2}$$
+
+is a joint distribution.
 
 ```
 z = torch.randn((1000,1))
@@ -213,7 +222,7 @@ plt.plot(x0,model(x0).detach().cpu())
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/cb3350f7-d152-4f81-8559-c1c4d5a642a7)
 
-after we get the posterior distribution $q_\phi(\cdot|x)$, we can use it to generate the distribution of $x_0$
+after we get the posterior distribution $q_\phi(\cdot\mid x)$, we can use it to generate the distribution of $x_0$
 
 ```
 z = torch.randn(1) + model(x0)
@@ -226,7 +235,7 @@ sns.distplot(x0)
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/dcf833ed-c743-4b9e-9a5b-a79f879a75dc)
 
-here we have assumed that we have the model $x_0|x_1 \sim N(x_0|x_1)$, as we assume the distribution $p$ is exact. In general, we need to infer the model with parameters $p_\theta$. The way to do is similar, but we need to replace $p$ by $p_\theta$ in the above formula.
+here we have assumed that we have the model $x_0\mid x_1 \sim N(x_0\mid x_1)$, as we assume the distribution $p$ is exact. In general, we need to infer the model with parameters $p_\theta$. The way to do is similar, but we need to replace $p$ by $p_\theta$ in the above formula.
 
 Example:
 $x_1 \sim N(0,1)$, $x_0 \sim N(x_1^2,1)$, let's infer the $x_1^2$ function.
