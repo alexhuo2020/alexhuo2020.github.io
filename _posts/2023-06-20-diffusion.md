@@ -34,6 +34,8 @@ is equivalent to maximize the ELBO
 
 $$\mathcal{L} = \mathbb{E}_{q(\cdot \mid x_0)}\left[ \log \frac{p_\theta(x_{0:T})}{q(x_{1:T}\mid x_0)}\right]$$
 
+
+
 after some algebra (see Weng's blog)
 
 $$\mathcal{L} = L_0 + L_1 + \ldots + L_T$$
@@ -88,4 +90,14 @@ for t in range(10):
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/9d58a8b6-d6d1-4bea-9720-b03b28db7067)
 
+
+### Posterior distribution
+
+The posterior distribution 
+
+$$x_{t-1} \mid x_t = N(\mu_t|\tilde \beta_t),~\tilde\beta_t = \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t$$
+
+and 
+
+$$\mu_t=\frac{1}{\alpha_t} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}}\epsilon_t), ~~ \epsilon_t = (x_t - \sqrt{\bar\alpha_t}x_0)/\sqrt{1-\bar\alpha_t}$$
 
