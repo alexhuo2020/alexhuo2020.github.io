@@ -97,6 +97,10 @@ The posterior distribution
 
 $$x_{t-1} \mid x_t, x_0 = N(\mu_t,\tilde \beta_t),~\tilde\beta_t = \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t$$
 
+and 
+
+$$\mu_t=\frac{1}{\alpha_t} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}}\epsilon_t), ~~ \epsilon_t = (x_t - \sqrt{\bar\alpha_t}x_0)/\sqrt{1-\bar\alpha_t}$$
+
 However, the above formula holds for $t>1$. For $t=1$, we need $q(x_0\mid x_1)$. Since we have assumed $x_0\sim U[0,1]$,
 
 However the last step $x_0\mid x_1$ is unkown. But for the case $x_0 \sim U[0,1]$, $q(x_0) = 1$ and 
@@ -106,7 +110,37 @@ $$q(x_0\mid x_1) \propto q(x_1\mid x_0) q(x_0) \propto e^{-\frac{(x_1-\sqrt{\alp
 hence 
 
 $$x_0\mid x_1 \sim N(\frac{1}{\sqrt\alpha_1} x_1,\frac{1-\alpha_1}{\alpha_1}I).$$
-and 
 
-$$\mu_t=\frac{1}{\alpha_t} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}}\epsilon_t), ~~ \epsilon_t = (x_t - \sqrt{\bar\alpha_t}x_0)/\sqrt{1-\bar\alpha_t}$$
+We can do the reverse sampling using this.
+
+```
+def posterior_param(xt, epst, t, alphas, alphasbar):
+  if t<1:
+    mu = 1/torch.sqrt(alphabars[0]) * xt
+    Sigma = (1-alphas[0])/alphas[0]**2
+  else:
+    mu = 1/torch.sqrt(alphas[t]) * (xt - (1-alphas[t])/torch.sqrt(1-alphabars[t]) * epst)
+    Sigma = (1-alphas[t]) * (1-alphasbar[t-1]) / ( 1-alphasbar[t])
+  return mu, Sigma
+xt = forward_sample(x0, 9)
+xtt = []
+for t in range(10)[::-1]:
+  epst = (xt-alphabars[t]*x0)/torch.sqrt(1-alphabars[t])
+  mu, beta = posterior_param(xt, epst, t, alphas, alphabars)
+  xt = mu +  torch.randn_like(x0) * torch.sqrt(beta)
+  xtt.append(xt)
+fig, axes = plt.subplots(2,5, sharex=True, sharey=True)
+axes = axes.flatten()
+for t in range(10):
+  sns.kdeplot(xtt[t], ax=axes[t])
+  axes[t].get_legend().remove()
+```
+
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/69b77739-5270-47dd-96e1-2f98b14549a0)
+
+
+### Learn the diffusion model
+
+The above reverse sampling process needs the knowledge of distributions of $x_0$. One needs the 
+
 
