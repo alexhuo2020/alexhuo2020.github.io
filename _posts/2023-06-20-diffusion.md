@@ -57,12 +57,35 @@ Note here $q_\phi$ is taken to be the real posterior distribution.
 
 ### The forward process 
 
-$$x_t\mid x_0 \sim N(\sqrt{\bar\alpha_t,\sqrt{1-\bar\alpha_t} I)$$
+First generate $\beta_1 < \beta_2 \ldots \beta_T$ and compute $\alpha_t = 1-\beta_t$, $\bar\alpha_t = \Pi_{i=1}^t \alpha_t$:
 
 ```
 betas = torch.linspace(0.001,0.2,10)
 alphas = 1 - betas
 alphabars = torch.cumprod(alphas,dim=0)
 ```
+Then the forward process satisfies
+
+$$x_t\mid x_0 \sim N(\sqrt{\bar\alpha_t},\sqrt{1-\bar\alpha_t} I)$$
+
+We consider $x_0\sim U[0,1]$.
+
 ```
-###
+def forward_sample(x0, t):
+  return torch.randn_like(x0)*torch.sqrt(1 - alphabars[t]) + torch.sqrt(alphabars[t])*x0
+x0 = torch.rand((1000,1))
+from time import sleep
+xt = [x0.numpy()]
+fig, axes = plt.subplots(2,5, sharex=True, sharey=True)
+
+axes = axes.flatten()
+for t in range(10):
+  xt = forward_sample(x0,t)
+  sns.kdeplot(xt, ax=axes[t])
+  axes[t].set(xlabel=t+1)
+  axes[t].get_legend().remove()
+```
+
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/9d58a8b6-d6d1-4bea-9720-b03b28db7067)
+
+
