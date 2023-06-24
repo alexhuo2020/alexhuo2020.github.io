@@ -1,4 +1,4 @@
-# Diffusion model II: simple illustration
+# Diffusion model 2: simple illustration
 ### Diffusion model
 
 We have seen that to make predictions of an unkown distribution, we can use a neural network $f_\theta$ to construct the model and then use the variational inference to infer the parameter. One can combine this idea with the stochastic process to get the diffusion model.
