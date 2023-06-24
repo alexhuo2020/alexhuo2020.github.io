@@ -95,8 +95,17 @@ for t in range(10):
 
 The posterior distribution 
 
-$$x_{t-1} \mid x_t = N(\mu_t|\tilde \beta_t),~\tilde\beta_t = \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t$$
+$$x_{t-1} \mid x_t, x_0 = N(\mu_t,\tilde \beta_t),~\tilde\beta_t = \frac{1-\bar\alpha_{t-1}}{1-\bar\alpha_t}\beta_t$$
 
+However, the above formula holds for $t>1$. For $t=1$, we need $q(x_0\mid x_1)$. Since we have assumed $x_0\sim U[0,1]$,
+
+However the last step $x_0\mid x_1$ is unkown. But for the case $x_0 \sim U[0,1]$, $q(x_0) = 1$ and 
+
+$$q(x_0\mid x_1) \propto q(x_1\mid x_0) q(x_0) \propto e^{-\frac{(x_1-\sqrt{\alpha_1}x_0)^2}{2(1-\alpha_1)}}\cdot 1 \propto e^{-\frac{(x_0-x_1/\sqrt{\alpha_1})^2}{2(1-\alpha_1)/\alpha_1}}$$
+
+hence 
+
+$$x_0\mid x_1 \sim N(\frac{1}{\sqrt\alpha_1} x_1,\frac{1-\alpha_1}{\alpha_1}I).$$
 and 
 
 $$\mu_t=\frac{1}{\alpha_t} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}}\epsilon_t), ~~ \epsilon_t = (x_t - \sqrt{\bar\alpha_t}x_0)/\sqrt{1-\bar\alpha_t}$$
