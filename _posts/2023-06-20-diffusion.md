@@ -56,7 +56,8 @@ Adding them together gives the loss function.
 Note here $q_\phi$ is taken to be the real posterior distribution.
 
 ### The forward process 
-$$x_t|x_0 \sim N(\sqrt{\bar\alpha_t,\sqrt{1-\bar\alpha_t} I)$$
+
+$$x_t\mid x_0 \sim N(\sqrt{\bar\alpha_t,\sqrt{1-\bar\alpha_t} I)$$
 
 ```
 betas = torch.linspace(0.001,0.2,10)
