@@ -264,6 +264,7 @@ sns.distplot(x0)
 ```
 
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/14f995ed-1780-4b8a-a6de-937d0ba42963)
+
 Note here to sample prediction, we use the model $x_1\sim N(0,1),$ $x_0 \sim N(f_\theta(x_1),1)$
 
 remark: one can also use the obtained posterior distribution $q_\phi(x_1\mid x_0)$ to make predictions using Bayesian as 
