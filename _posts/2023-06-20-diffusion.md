@@ -141,6 +141,90 @@ for t in range(10):
 
 ### Learn the diffusion model
 
-The above reverse sampling process needs the knowledge of distributions of $x_0$. One needs the 
+The above reverse sampling process needs the knowledge of distributions of $x_0$. If we only have finite observations of $x_0$,
+the reverse sampling only gives a posterior distribution rather than recover the distribution of $x_0$. 
+We need to learn the model $f_\theta$.
+
+The model:
+
+$X_T \sim N(0,1), ~ x_{t-1}\mid x_t \sim N(\mu_{\theta,t}, \tilde\beta_t)$
+
+We can utilize the similar relation 
+
+$$\mu_{\theta,t} = \frac{1}{\alpha_t} (x_t - \frac{1-\alpha_t}{\sqrt{1-\bar\alpha_t}}\epsilon_{\theta,t})$$
+
+Hence to learn the paramter $\theta$, we need to minimize the ELBO. Note the KL between two Gaussians is the MSE.
+
+$$Loss = \sum_{t=1}^T \|\epsilon_t - \epsilon_{\theta,t}\|_{2}^2$$
+
+Build the network
+```
+class Ftheta(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = nn.Linear(2,200)
+        self.l2 = nn.Linear(200,400)
+        self.l3 = nn.Linear(400,200)
+        self.l4  = nn.Linear(200,1)
+    def forward(self,x,t):
+        xt = torch.concat([x,t],dim=-1)
+        xt = torch.relu(self.l1(xt))
+        xt = torch.relu(self.l2(xt))
+        xt = torch.relu(self.l3(xt))
+        return self.l4(xt)
+model = Ftheta()
+optim = torch.optim.Adam(model.parameters())
+```
+Train the network:
+```
+def Xt(eps, x0, t):
+  return torch.sqrt(alphabars[t])*x0 + torch.sqrt(1-alphabars[t])*eps
+optim = torch.optim.AdamW(model.parameters())
+losses = []
+for epoch in range(1000):
+  x0 = torch.rand((1000,1))
+  eps = torch.randn((1000,1))
+  t = torch.randint(0,10,(1000,1))
+  xt = Xt(eps,x0,t)
+  loss = torch.mean((model(xt,t) - eps)**2*(1-alphas[t])**2/2/alphas[t]/(1-alphabars[t]))
+  optim.zero_grad()
+  loss.backward()
+  losses.append(loss.item())
+  optim.step()
+```
+
+Sampling process
+```
+xt = torch.randn((10000,1))
+xtt = []
+for t in range(10)[::-1]:
+  z = torch.randn((10000,1))
+  tt = torch.ones_like(z)*t
+  mu = 1/torch.sqrt(alphas[t])*(xt - (1-alphas[t])/torch.sqrt(1-alphabars[t])*model(xt,tt))
+  if t>0:
+    xt = mu +  torch.randn_like(xt)*torch.sqrt((1-alphas[t])*(1-alphabars[t-1])/(1-alphabars[t]))
+  else:
+    xt = mu
+  xtt.append(xt)
+```
+
+The learned distribution:
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/f7baee9d-0809-457e-a4fd-8ed051e89160)
+
+The loss:
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/0ae135ea-4b8d-4ba3-ace3-f5042d331d11)
+
+The sampling 
+
+```
+fig, axes = plt.subplots(2,5, sharex=True, sharey=True)
+axes = axes.flatten()
+for t in range(10):
+  sns.kdeplot(xtt[t].detach(), ax=axes[t])
+  axes[t].get_legend().remove()
+```
+![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/ac22fa04-6c0d-4a96-9ec1-b885874ec96f)
+
+
 
 
