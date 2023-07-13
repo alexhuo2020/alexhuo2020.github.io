@@ -98,6 +98,21 @@ class Downsample(nn.Module):
 ```
 
 ### Building blocks, ResNet and Attention
+ResNet structure:
+  * in_layers: normalization -> SiLU -> conv
+  * emb_layers: SiLU -> linear
+  * out_layer: normlization -> SiLU -> conv(zero_module)
+  * output = out_layer(in_layer(x) + emb_layer(t)) + x
+
+AttentionBlock structure:
+  * Apply self-attention
+  * output = x + MultiheadAtten(x)
+
+### Building UNET
+*input_blocks: conv(x), ([ResBlock(ch0)]*m + [AttentionBlock(ch0)]+Downsample) +  ([ResBlock(ch1)]*m + [AttentionBlock(ch1)+Downsample]) + ... +   ([ResBlock(chN)]*m + [AttentionBlock(chN)])
+*middle_block: ResBlock + AttentionBlock + ResBlock
+*output_blocks: [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample] + ... + [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample]
+*out: normalization -> SiLU -> conv
 
 
 
