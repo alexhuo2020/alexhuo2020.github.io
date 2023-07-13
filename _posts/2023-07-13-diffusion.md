@@ -114,6 +114,56 @@ AttentionBlock structure:
 * output_blocks: [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample] + ... + [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample]
 * out: normalization -> SiLU -> conv
 
+### A trick to include time variable as input
+In building models, sometimes the input is x and sometimes is (x,t). [1] uses a sequential model to achieve this.
+```
+from abc import abstract method
+class TimestepBlock(nn.Module):
+    """
+    Any module where forward() takes timestep embeddings as a second argument.
+    """
 
+    @abstractmethod
+    def forward(self, x, emb):
+        """
+        Apply the module to `x` given `emb` timestep embeddings.
+        """
+
+
+class TimestepEmbedSequential(nn.Sequential, TimestepBlock):
+    """
+    A sequential module that passes timestep embeddings to the children that
+    support it as an extra input.
+    """
+
+    def forward(self, x, emb):
+        for layer in self:
+            if isinstance(layer, TimestepBlock):
+                x = layer(x, emb)
+            else:
+                x = layer(x)
+        return x 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Refs
+
+[1] Nichol, Alexander Quinn, and Prafulla Dhariwal. "Improved denoising diffusion probabilistic models." International Conference on Machine Learning. PMLR, 2021.
 
 
