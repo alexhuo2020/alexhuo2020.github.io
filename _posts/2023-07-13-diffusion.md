@@ -30,6 +30,7 @@ return result
 
 ### The time embdedding
 Use a sin position embedding, introduced in [https://arxiv.org/abs/1706.03762].
+
 $$\begin{aligned}
   \vec{p_t}^{(i)} = f(t)^{(i)} & :=
   \begin{cases}
@@ -37,5 +38,6 @@ $$\begin{aligned}
       \cos({\omega_k} . t),  & \text{if}\  i = 2k + 1
   \end{cases}
 \end{aligned}$$
+
 where
 $$\omega_k = \frac{1}{10000^{2k / d}}$$
