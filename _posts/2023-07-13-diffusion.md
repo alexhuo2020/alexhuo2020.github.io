@@ -80,3 +80,25 @@ for i in range(0, len(xx[0])):
 plt.imshow(xx)
 ```
 ![image](https://github.com/alexhuo2020/alexhuo2020.github.io/assets/136142213/a6d49a04-d993-4ccc-b6c2-0de36d2bac88)
+
+### How to downsample and upsample
+One can use Conv with stride/averge pooling/interpolation to do down sampling and ConvTranspose/interpolate to do upsampling. 
+Here ref [1] use 
+
+```
+class Upsample(nn.Module):
+...
+  F.interpolate(x, scale_factor=2, mode="nearest")
+class Downsample(nn.Module):
+...
+  if use_conv:
+    self.op = nn.Conv2d(channels, channels, 3, stride=2,padding=1)
+  else:
+    self.op = nn.AvgPool2d(stride=2)
+```
+
+### Building blocks, ResNet and Attention
+
+
+
+
