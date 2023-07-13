@@ -1,4 +1,4 @@
-# Diffusion model 3: training images
+# Diffusion model 3: training images - a unet structure
 
 We will analyze the code from https://github.com/openai/improved-diffusion.
 
