@@ -14,7 +14,7 @@ Unet consists of three blocks: downsample block, middle block and upsample block
   * middle block: $x_m$ ->$y_m$ with same dimension
   * upsample block: concat($x_k,y_k$) $\to$ $y_{k-1}$
 
-'''
+```
 def forward(self,x,timesteps):
  hs = []
  emb = embedding of timesteps
@@ -26,4 +26,4 @@ def forward(self,x,timesteps):
   cat_in = torch.cat([h, hs.pop()],dim=1)
   h = module(cat_in, emb)
 return result
-'''
+```
