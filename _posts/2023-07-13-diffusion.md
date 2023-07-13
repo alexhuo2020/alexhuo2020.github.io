@@ -27,3 +27,15 @@ def forward(self,x,timesteps):
   h = module(cat_in, emb)
 return result
 ```
+
+### The time embdedding
+Use a sin position embedding, introduced in [https://arxiv.org/abs/1706.03762].
+$$\begin{align}
+  \vec{p_t}^{(i)} = f(t)^{(i)} & :=
+  \begin{cases}
+      \sin({\omega_k} . t),  & \text{if}\  i = 2k \\
+      \cos({\omega_k} . t),  & \text{if}\  i = 2k + 1
+  \end{cases}
+\end{align}$$
+where
+$$\omega_k = \frac{1}{10000^{2k / d}}$$
