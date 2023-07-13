@@ -109,10 +109,10 @@ AttentionBlock structure:
   * output = x + MultiheadAtten(x)
 
 ### Building UNET
-*input_blocks: conv(x), ([ResBlock(ch0)]*m + [AttentionBlock(ch0)]+Downsample) +  ([ResBlock(ch1)]*m + [AttentionBlock(ch1)+Downsample]) + ... +   ([ResBlock(chN)]*m + [AttentionBlock(chN)])
-*middle_block: ResBlock + AttentionBlock + ResBlock
-*output_blocks: [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample] + ... + [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample]
-*out: normalization -> SiLU -> conv
+* input_blocks: conv(x), ([ResBlock(ch0)]*m + [AttentionBlock(ch0)]+Downsample) +  ([ResBlock(ch1)]*m + [AttentionBlock(ch1)+Downsample]) + ... +   ([ResBlock(chN)]*m + [AttentionBlock(chN)])
+* middle_block: ResBlock + AttentionBlock + ResBlock
+* output_blocks: [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample] + ... + [ResBlock(chN)*(m+1) + AttentionBlock(chN) + Upsample]
+* out: normalization -> SiLU -> conv
 
 
 
