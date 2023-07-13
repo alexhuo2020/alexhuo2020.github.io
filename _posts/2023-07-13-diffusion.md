@@ -11,7 +11,7 @@ Input: x with shape (b, c, dims); t with shape (b,t_dims)
 Unet consists of three blocks: downsample block, middle block and upsample block
 
   * input block: downsample $x_0\to x_1\to x_2\to ...\to x_m$
-  * middle block: $x_m$ ->$y_m$ with same dimension
+  * middle block: $x_m \to y_m$ with same dimension
   * upsample block: concat($x_k,y_k$) $\to$ $y_{k-1}$
 
 ```
