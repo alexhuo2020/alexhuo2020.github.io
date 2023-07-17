@@ -75,7 +75,37 @@ CD: package, deploy to pre-production environment, production environment, sourc
 Source control: git-based respository (Azure Repos, github repos)
 
 ### Agile planning
-isolate work into sprints
+* isolate work into sprints 
+* use Azure Boards or Github issues
+
+###IaC (Infrastructure as code)
+
+### Azure DevOps
+* Boards
+* Repos
+* Pipelines: CI/CD
+
+### Github
+*  Issues
+*  Repos
+*  Actions: automatic workflow
+
+## Azure ML Service
+Role Based Access Control (RBAC): owner, contributor, reader
+
+compute resources: instance, cluster, inference cluster, attached compute
+
+datastores: workspacefilestore, workspaceblobstore
+
+environment: Azure container registry
+
+type of jobs:
+* command
+* sweep: hyperparameter tuning
+* pipeline
+
+
+
 
 
 
