@@ -104,6 +104,19 @@ type of jobs:
 * sweep: hyperparameter tuning
 * pipeline
 
+## Design a data ingestion strtegy
+six steps
+* define problem
+* get data
+* prepare -- ELT, ELT
+* train
+* integrate: deploy to an endpoint
+* monitor
+
+Identify
+* data source: CRM, SQL, IoT, ...
+* data format
+   * dd
 
 
 
