@@ -116,7 +116,21 @@ six steps
 Identify
 * data source: CRM, SQL, IoT, ...
 * data format
-   * dd
+
+
+## Trigger Github Actions with feature-based dev
+* data science team -- model development -- feature branch
+* software team -- deploy
+
+on pull_request; on push 
+
+## linting and unit testing
+
+## environment
+* development
+* staging
+* production
+## Deploy
 
 
 
